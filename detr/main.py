@@ -207,14 +207,13 @@ def main(args):
 )
     # Start training using PyTorch Lightning Trainer
 
+    
     trainer = Trainer(
     max_epochs=args.epochs,
     callbacks=[checkpoint_callback],
-    gpus=args.world_size,
-    distributed_backend='ddp' if args.world_size > 1 else None,
+    accelerator='ddp' if args.world_size > 1 else None,
     resume_from_checkpoint=args.resume,
     default_root_dir=args.output_dir,
-    accelerator='ddp' if args.world_size > 1 else None,
 )
     trainer.fit(model)
 
